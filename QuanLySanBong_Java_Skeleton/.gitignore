@@ -1,0 +1,28 @@
+# Build directories
+/build/
+/dist/
+/nbproject/private/
+
+# IDE files
+*.class
+*.jar
+*.log
+*.swp
+*~
+.DS_Store
+
+# NetBeans specific
+/build/
+/dist/
+/nbproject/private/
+/nbproject/build-impl.xml
+/nbproject/genfiles.properties
+
+# IntelliJ
+*.iml
+.idea/
+out/
+
+# Others
+*.exe
+*.o

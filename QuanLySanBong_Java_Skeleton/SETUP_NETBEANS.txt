@@ -1,0 +1,26 @@
+=== Hướng dẫn setup MySQL Connector/J cho NetBeans ===
+
+1. Tải MySQL Connector/J từ:
+   https://dev.mysql.com/downloads/connector/j/
+   (Chọn version 8.0.33 hoặc mới nhất)
+
+2. Đặt file JAR vào thư mục 'lib/':
+   - Đặt tên: mysql-connector-java-8.0.33.jar (hoặc phiên bản tương ứng)
+   - Thư mục: lib/mysql-connector-java-8.0.33.jar
+
+3. NetBeans sẽ tự động thêm JAR vào classpath từ project.properties
+
+4. Nếu sử dụng XAMPP:
+   - Đảm bảo MySQL đang chạy trong XAMPP Control Panel
+   - User: root (mặc định)
+   - Password: (rỗng - mặc định)
+   - Port: 3306 (mặc định)
+
+5. Nếu cần thay đổi cấu hình MySQL:
+   - Chỉnh sửa src/quanlysanbong/database/DBConnection.java
+   - Cập nhật URL, USER, PASSWORD theo cấu hình của bạn
+
+6. Mở project trong NetBeans:
+   - File > Open Project > chọn thư mục QuanLySanBong_Java_Skeleton
+   - NetBeans sẽ tự động nhận diện cấu trúc Ant
+   - Chạy: Run > Run Project (hoặc F6)

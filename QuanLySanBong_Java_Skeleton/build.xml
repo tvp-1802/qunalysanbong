@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="QuanLySanBong" default="run" basedir=".">
+    <description>
+        Builds, tests, and runs the QuanLySanBong project.
+    </description>
+
+    <!-- Properties -->
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="main.class" value="quanlysanbong.main.Main"/>
+
+    <!-- Classpath -->
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="*.jar"/>
+        <pathelement path="${build.dir}"/>
+    </path>
+
+    <!-- Clean target -->
+    <target name="clean" description="Clean up the build directory">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+
+    <!-- Compile target -->
+    <target name="compile" description="Compile Java source files">
+        <mkdir dir="${build.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" debug="true" includeantruntime="false">
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+
+    <!-- Jar target -->
+    <target name="jar" depends="compile" description="Create JAR file">
+        <mkdir dir="${dist.dir}"/>
+        <jar destfile="${dist.dir}/QuanLySanBong.jar" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+                <attribute name="Class-Path" value="lib/mysql-connector-java-8.0.33.jar"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <!-- Run target -->
+    <target name="run" depends="compile" description="Run the application">
+        <java classname="${main.class}" fork="true">
+            <classpath refid="classpath"/>
+        </java>
+    </target>
+
+    <!-- All target -->
+    <target name="all" depends="clean, compile, jar" description="Build everything"/>
+</project>
