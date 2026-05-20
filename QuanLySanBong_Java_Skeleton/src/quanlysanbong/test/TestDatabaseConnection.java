@@ -15,6 +15,10 @@ public class TestDatabaseConnection {
         String password = "";
         
         try {
+            // Explicitly load MySQL driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            System.out.println("MySQL Driver loaded successfully");
+            
             System.out.println("Attempting to connect to MySQL...");
             System.out.println("URL: " + url);
             System.out.println("User: " + user);
@@ -29,13 +33,19 @@ public class TestDatabaseConnection {
                 System.out.println("Connection closed.");
             }
         } catch (SQLException e) {
+        } catch (ClassNotFoundException e) {
+            System.out.println("\n✗ DRIVER NOT FOUND!");
+            System.out.println("MySQL JDBC driver not in classpath");
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("\nSolution: Check if mysql-connector-j-9.7.0.jar exists in lib/ folder");
+            e.printStackTrace();
+        } catch (SQLException e) {
             System.out.println("\n✗ CONNECTION FAILED!");
             System.out.println("Error: " + e.getMessage());
             System.out.println("\nPossible causes:");
-            System.out.println("1. MySQL Connector/J not in classpath");
-            System.out.println("2. MySQL server not running");
-            System.out.println("3. Wrong database credentials");
-            System.out.println("4. Database doesn't exist");
+            System.out.println("1. MySQL server not running");
+            System.out.println("2. Wrong database credentials");
+            System.out.println("3. Database doesn't exist");
             e.printStackTrace();
         } catch (Exception e) {
             System.out.println("\n✗ UNEXPECTED ERROR!");
