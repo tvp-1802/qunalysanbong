@@ -1,0 +1,127 @@
+=== HƯỚNG DẪN GIẢI QUYẾT: No suitable driver found ===
+
+Vấn đề:
+- MySQL Connector/J (JDBC driver) chưa được thêm vào thư mục lib/
+- NetBeans không thể tìm thấy driver để kết nối MySQL
+
+CÁCH 1: Tải và đặt driver thủ công (NHANH NHẤT)
+=========================================================
+
+1. Tải MySQL Connector/J 8.0.33:
+   - Truy cập: https://dev.mysql.com/downloads/connector/j/
+   - Chọn "Select Operating System: Platform Independent"
+   - Tải file: mysql-connector-java-8.0.33.zip
+
+2. Giải nén file ZIP
+
+3. Tìm file: mysql-connector-java-8.0.33.jar
+   - Nó nằm bên trong folder mysql-connector-java-8.0.33/
+
+4. Copy file JAR này vào thư mục: lib/
+   - Đường dẫn đầy đủ: QuanLySanBong_Java_Skeleton/lib/mysql-connector-java-8.0.33.jar
+
+5. Trong NetBeans:
+   - Right-click project → Properties
+   - Chọn "Libraries" → Add JAR/Folder
+   - Chọn file: lib/mysql-connector-java-8.0.33.jar
+   - Click OK
+
+6. Clean and Build lại: Run > Clean and Build Project (Shift+F11)
+
+7. Run project: Run > Run Project (F6)
+
+
+CÁCH 2: Tải tự động bằng PowerShell (CHỈ WINDOWS)
+=========================================================
+
+1. Mở PowerShell (right-click, Run as Administrator)
+
+2. Chuyển tới folder project:
+   cd "G:\QL_Tuan\QuanLySanBong_Java_Skeleton"
+
+3. Cho phép chạy script:
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+
+4. Chạy script tải driver:
+   .\setup-jdbc-driver.ps1
+
+5. Chờ tải và giải nén xong
+
+6. Trong NetBeans:
+   - Right-click project → Properties
+   - Chọn "Libraries" → Add JAR/Folder
+   - Chọn: lib/mysql-connector-java-8.0.33.jar
+
+7. Clean and Build + Run
+
+
+CÁCH 3: Sử dụng Maven (CÓ POM.XML)
+=========================================================
+
+Nếu project sử dụng Maven, thêm dependency vào pom.xml:
+
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.33</version>
+</dependency>
+
+Sau đó:
+- Run > Build Project
+- NetBeans tự động tải dependency
+
+
+KIỂM TRA SAU KHI SETUP:
+=========================================================
+
+1. Mở file: nbproject/project.properties
+2. Kiểm tra dòng: javac.classpath=lib/mysql-connector-java-8.0.33.jar
+3. Nếu đã thêm JAR qua NetBeans, dòng này sẽ tự động update
+
+4. Clean and Build: Shift+F11
+5. Nếu compile thành công, chạy: F6
+
+
+KIỂM TRA XAMPP MySQL:
+=========================================================
+
+Trước khi run app, đảm bảo:
+
+1. Mở XAMPP Control Panel
+2. Click START cho MySQL
+3. Mở http://localhost/phpmyadmin
+4. Kiểm tra database "quanlysanbong" đã tạo chưa
+   - Nếu chưa: Import file database.sql
+   - File > New > upload database.sql → Import
+
+5. User/Password mặc định XAMPP:
+   - User: root
+   - Password: (rỗng)
+   - Host: localhost
+   - Port: 3306
+
+6. Nếu cần thay đổi thông tin kết nối, chỉnh:
+   src/quanlysanbong/database/DBConnection.java
+   - private static final String USER = "root";
+   - private static final String PASSWORD = "";
+   - private static final String URL = "jdbc:mysql://localhost:3306/quanlysanbong...";
+
+
+LỖI PHỔ BIẾN:
+=========================================================
+
+❌ "No suitable driver found"
+   → JAR không được thêm vào classpath
+   → Giải pháp: Thêm JAR qua NetBeans Properties > Libraries
+
+❌ "Connection refused"
+   → MySQL server không chạy
+   → Giải pháp: Mở XAMPP, click START cho MySQL
+
+❌ "Access denied for user 'root'"
+   → Password sai
+   → Giải pháp: Kiểm tra password trong DBConnection.java, đối chiếu với XAMPP config
+
+❌ "Unknown database 'quanlysanbong'"
+   → Database chưa tạo
+   → Giải pháp: Import file database.sql qua phpmyadmin

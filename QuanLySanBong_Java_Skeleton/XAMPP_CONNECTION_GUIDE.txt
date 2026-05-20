@@ -1,0 +1,172 @@
+=== HƯỚNG DẪN KẾT NỐI XAMPP QUANLYSANBONG VỚI NETBEANS ===
+
+✓ Database đã sẵn có trên XAMPP: quanlysanbong (5 bảng)
+✓ Cấu trúc project đã setup cho NetBeans
+
+Chỉ còn 1 bước: Thêm MySQL Connector/J
+
+
+BƯỚC 1: KIỂM TRA XAMPP MYSQL
+====================================================
+
+1. Mở XAMPP Control Panel
+2. Đảm bảo MySQL đang chạy (xanh lá)
+3. Mở http://localhost/phpmyadmin
+4. Kiểm tra database "quanlysanbong" tồn tại
+   ✓ Đã có 5 bảng: hoadon, khachhang, lichdat, sanbong, taikhoan
+
+
+BƯỚC 2: TẢI MYSQL CONNECTOR/J
+====================================================
+
+Tùy chọn 2a (Tải thủ công):
+--------------------------
+1. Truy cập: https://dev.mysql.com/downloads/connector/j/
+2. Chọn "Select Operating System: Platform Independent"
+3. Tải file: mysql-connector-java-8.0.33.zip (hoặc mới nhất)
+4. Giải nén file ZIP
+
+Tùy chọn 2b (PowerShell — Windows):
+--------------------------
+1. Mở PowerShell (Windows + X → Windows PowerShell)
+2. Chạy lệnh:
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+
+3. Chuyển tới folder project:
+   cd "G:\QL_Tuan\QuanLySanBong_Java_Skeleton"
+
+4. Chạy script:
+   .\setup-jdbc-driver.ps1
+
+5. Đợi khoảng 1-2 phút để tải xong
+
+
+BƯỚC 3: ĐẶT JAR VÀO LIB/
+====================================================
+
+Nếu tải thủ công (Tùy chọn 2a):
+1. Tìm file: mysql-connector-java-8.0.33.jar
+   - Nó nằm trong thư mục: mysql-connector-java-8.0.33/ (sau giải nén)
+
+2. Copy file này vào thư mục:
+   QuanLySanBong_Java_Skeleton\lib\
+
+3. Sau khi copy, bạn sẽ có:
+   QuanLySanBong_Java_Skeleton\lib\mysql-connector-java-8.0.33.jar
+
+
+BƯỚC 4: THÊM JAR VÀO NETBEANS CLASSPATH
+====================================================
+
+1. Mở NetBeans
+2. Right-click project "QuanLySanBong_Java_Skeleton"
+3. Chọn "Properties"
+4. Bên trái, chọn tab "Libraries"
+5. Click nút "+ Add JAR/Folder" (bên tay phải)
+6. Duyệt tới: lib/mysql-connector-java-8.0.33.jar
+7. Click "Open" rồi "OK"
+
+
+BƯỚC 5: CLEAN AND BUILD
+====================================================
+
+1. Trong NetBeans, chọn: Run > Clean and Build Project
+2. Hoặc nhấn: Shift + F11
+3. Chờ build hoàn thành (check console không có lỗi)
+
+
+BƯỚC 6: TEST KẾT NỐI
+====================================================
+
+Có 2 cách test:
+
+Cách A (Chạy test class):
+1. Trong NetBeans, mở: src > quanlysanbong > test > TestDatabaseConnection.java
+2. Right-click file → Run File
+3. Xem Output:
+   - Nếu thành công: "✓ CONNECTION SUCCESSFUL!"
+   - Nếu lỗi: Xem error message dưới đây
+
+Cách B (Chạy ứng dụng chính):
+1. Right-click project → Run Project (F6)
+2. App sẽ mở LoginForm
+3. Nếu không có lỗi → Database connected!
+
+
+NẾUSỆU GẶP LỖI
+====================================================
+
+❌ "No suitable driver found"
+→ JAR chưa được thêm vào classpath
+→ Giải pháp: Kiểm tra lại Bước 4
+
+❌ "Connection refused"
+→ MySQL server không chạy
+→ Giải pháp: Mở XAMPP, click START cho MySQL
+
+❌ "Access denied for user 'root'@'localhost'"
+→ Password sai hoặc user không tồn tại
+→ Giải pháp: Kiểm tra file DBConnection.java
+   - User: root
+   - Password: (rỗng)
+→ Hoặc cập nhật nếu XAMPP sử dụng password khác
+
+❌ "Unknown database 'quanlysanbong'"
+→ Database chưa tạo
+→ Giải pháp: Mở phpmyadmin, import database.sql
+
+❌ "ClassNotFoundException: com.mysql.cj.jdbc.Driver"
+→ Driver không được tìm thấy (same as "No suitable driver found")
+→ Giải pháp: Thêm JAR vào classpath, Clean and Build
+
+
+KIỂM TRA FILE STRUCTURE SAU BƯỚC 3
+====================================================
+
+Bạn nên có:
+
+QuanLySanBong_Java_Skeleton/
+├── lib/
+│   └── mysql-connector-java-8.0.33.jar  ← JAR file nằm đây
+├── src/
+│   └── quanlysanbong/
+│       ├── dao/
+│       ├── database/
+│       │   └── DBConnection.java
+│       ├── main/
+│       │   └── Main.java
+│       ├── model/
+│       ├── test/
+│       │   └── TestDatabaseConnection.java
+│       └── view/
+├── nbproject/
+├── build.xml
+├── JDBC_SETUP_GUIDE.txt
+├── SETUP_NETBEANS.txt
+└── ...
+
+
+CÁCH THAY ĐỔI USER/PASSWORD XAMPP
+====================================================
+
+Nếu XAMPP cấu hình khác root/rỗng:
+
+1. Mở file: src/quanlysanbong/database/DBConnection.java
+2. Cập nhật:
+   - private static final String USER = "your_username";
+   - private static final String PASSWORD = "your_password";
+3. Save file
+4. Clean and Build lại
+
+
+TÓMMM TẮT NHANH
+====================================================
+
+1. Tải mysql-connector-java-8.0.33.jar từ MySQL website
+2. Bỏ vào thư mục: lib/
+3. NetBeans: Right-click project → Properties → Libraries → Add JAR
+4. Chọn file: lib/mysql-connector-java-8.0.33.jar
+5. Clean and Build (Shift+F11)
+6. Run (F6) hoặc chạy TestDatabaseConnection.java
+7. ✓ Done!
+
