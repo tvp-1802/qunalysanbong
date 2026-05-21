@@ -48,6 +48,16 @@
                 <ide-action name="run"/>
             </context-menu>
         </view>
+        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/2">
+            <compilation-unit>
+                <package-root>src</package-root>
+                <unit-name>QuanLySanBong</unit-name>
+                <source-level>11</source-level>
+                <classpath mode="compile">lib/mysql-connector-j-9.7.0.jar</classpath>
+                <classpath mode="run">lib/mysql-connector-j-9.7.0.jar</classpath>
+                <built-to>build/classes</built-to>
+            </compilation-unit>
+        </java-data>
         <subprojects/>
     </projectDescription>
 </project>
