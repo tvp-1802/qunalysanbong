@@ -68,9 +68,7 @@ public class TaiKhoanForm extends JFrame {
 
         tblTaiKhoan.getSelectionModel().addListSelectionListener(e -> chonDong());
 
-        add(form, BorderLayout.WEST);
-        add(new JScrollPane(tblTaiKhoan), BorderLayout.CENTER);
-        add(buttons, BorderLayout.SOUTH);
+        FormUiHelper.layoutCrudWithSplit(this, form, tblTaiKhoan, buttons, 300);
     }
 
     private TaiKhoan getFormData() {

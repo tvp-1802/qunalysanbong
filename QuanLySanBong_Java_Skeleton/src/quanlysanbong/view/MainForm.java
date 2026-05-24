@@ -44,6 +44,11 @@ public class MainForm extends JFrame {
         }
 
         btnTaiKhoan.addActionListener(e -> new TaiKhoanForm().setVisible(true));
+        btnSanBong.addActionListener(e -> new SanBongForm().setVisible(true));
+        btnKhachHang.addActionListener(e -> new KhachHangForm().setVisible(true));
+        btnDatSan.addActionListener(e -> new LichDatForm(taiKhoanDangNhap).setVisible(true));
+        btnHoaDon.addActionListener(e -> new HoaDonForm().setVisible(true));
+        btnDoanhThu.addActionListener(e -> new DoanhThuForm().setVisible(true));
         btnDangXuat.addActionListener(e -> {
             new LoginForm().setVisible(true);
             dispose();
